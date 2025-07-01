@@ -12,6 +12,20 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, origins=[os.getenv('CORS_ORIGIN', 'http://localhost:3000')])
 
+def convert_numpy_types(obj):
+    """Convert numpy types to native Python types for JSON serialization"""
+    if isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {key: convert_numpy_types(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_numpy_types(item) for item in obj]
+    return obj
+
 class ExpenseAnalyzer:
     def __init__(self):
         self.spending_thresholds = {
@@ -45,10 +59,10 @@ class ExpenseAnalyzer:
         df['amount'] = pd.to_numeric(df['amount'])
         
         # Basic analysis
-        total_spending = df['amount'].sum()
-        average_daily = total_spending / 30
+        total_spending = float(df['amount'].sum())
+        average_daily = float(total_spending / 30)
         top_category = df.groupby('category')['amount'].sum().idxmax()
-        top_category_amount = df.groupby('category')['amount'].sum().max()
+        top_category_amount = float(df.groupby('category')['amount'].sum().max())
         
         # Generate suggestions
         suggestions = self._generate_suggestions(df, total_spending, average_daily, top_category)
@@ -88,13 +102,13 @@ class ExpenseAnalyzer:
             if percentage > 40:
                 suggestions.append({
                     'type': 'advice',
-                    'message': f'{category} accounts for {percentage:.1f}% of your spending. Consider setting a specific budget for this category.',
+                    'message': f'{category} accounts for {float(percentage):.1f}% of your spending. Consider setting a specific budget for this category.',
                     'priority': 'medium'
                 })
         
         # Daily spending pattern analysis
         daily_spending = df.groupby(df['date'].dt.date)['amount'].sum()
-        if daily_spending.std() > daily_spending.mean() * 0.5:
+        if len(daily_spending) > 1 and float(daily_spending.std()) > float(daily_spending.mean()) * 0.5:
             suggestions.append({
                 'type': 'tip',
                 'message': 'Your daily spending varies significantly. Try to maintain more consistent spending patterns.',
@@ -113,7 +127,7 @@ class ExpenseAnalyzer:
         # Recent spending trend
         recent_expenses = df[df['date'] >= datetime.now() - timedelta(days=7)]
         if len(recent_expenses) > 0:
-            recent_total = recent_expenses['amount'].sum()
+            recent_total = float(recent_expenses['amount'].sum())
             previous_week_total = total_spending - recent_total
             if previous_week_total > 0:
                 change_percentage = ((recent_total - previous_week_total) / previous_week_total) * 100
@@ -142,8 +156,9 @@ class ExpenseAnalyzer:
     
     def _detailed_analysis(self, df, total_spending, average_daily, top_category, top_category_amount):
         """Provide detailed spending analysis"""
-        category_breakdown = df.groupby('category')['amount'].sum().to_dict()
-        payment_method_breakdown = df.groupby('paymentMethod')['amount'].sum().to_dict()
+        # Convert pandas series to dict and ensure values are native Python types
+        category_breakdown = convert_numpy_types(df.groupby('category')['amount'].sum().to_dict())
+        payment_method_breakdown = convert_numpy_types(df.groupby('paymentMethod')['amount'].sum().to_dict())
         
         # Calculate spending efficiency score
         efficiency_score = self._calculate_efficiency_score(df, total_spending)
@@ -152,13 +167,13 @@ class ExpenseAnalyzer:
         patterns = self._identify_patterns(df)
         
         return {
-            'totalSpending': total_spending,
-            'averageDailySpending': average_daily,
+            'totalSpending': float(total_spending),
+            'averageDailySpending': float(average_daily),
             'topCategory': top_category,
-            'topCategoryAmount': top_category_amount,
+            'topCategoryAmount': float(top_category_amount),
             'categoryBreakdown': category_breakdown,
             'paymentMethodBreakdown': payment_method_breakdown,
-            'efficiencyScore': efficiency_score,
+            'efficiencyScore': int(efficiency_score),
             'patterns': patterns,
             'message': f'Analysis complete for ₹{total_spending:,.2f} in spending over 30 days.'
         }
@@ -169,7 +184,7 @@ class ExpenseAnalyzer:
         
         # Deduct points for high variance in daily spending
         daily_spending = df.groupby(df['date'].dt.date)['amount'].sum()
-        if daily_spending.std() > daily_spending.mean() * 0.5:
+        if len(daily_spending) > 1 and float(daily_spending.std()) > float(daily_spending.mean()) * 0.5:
             score -= 20
         
         # Deduct points for too many small transactions
@@ -178,7 +193,7 @@ class ExpenseAnalyzer:
             score -= 15
         
         # Add points for consistent spending
-        if daily_spending.std() < daily_spending.mean() * 0.2:
+        if len(daily_spending) > 1 and float(daily_spending.std()) < float(daily_spending.mean()) * 0.2:
             score += 10
         
         return max(0, min(100, score))
@@ -188,21 +203,22 @@ class ExpenseAnalyzer:
         patterns = []
         
         # Check for weekend spending
-        weekend_spending = df[df['date'].dt.weekday >= 5]['amount'].sum()
-        weekday_spending = df[df['date'].dt.weekday < 5]['amount'].sum()
+        weekend_spending = float(df[df['date'].dt.weekday >= 5]['amount'].sum())
+        weekday_spending = float(df[df['date'].dt.weekday < 5]['amount'].sum())
         
-        if weekend_spending > weekday_spending * 1.5:
+        if weekday_spending > 0 and weekend_spending > weekday_spending * 1.5:
             patterns.append('Higher spending on weekends')
         
         # Check for recurring expenses
         category_counts = df['category'].value_counts()
-        if category_counts.max() > 5:
+        if len(category_counts) > 0 and int(category_counts.max()) > 5:
             patterns.append('Frequent expenses in certain categories')
         
         # Check for large transactions
-        large_transactions = df[df['amount'] > df['amount'].quantile(0.9)]
-        if len(large_transactions) > 0:
-            patterns.append('Occasional large transactions')
+        if len(df) > 0:
+            large_transactions = df[df['amount'] > df['amount'].quantile(0.9)]
+            if len(large_transactions) > 0:
+                patterns.append('Occasional large transactions')
         
         return patterns
 
@@ -236,6 +252,9 @@ def analyze_expenses():
         # Analyze expenses
         result = analyzer.analyze_expenses(expenses, user_id, user_name)
         
+        # Ensure result is JSON serializable
+        result = convert_numpy_types(result)
+        
         return jsonify(result)
         
     except Exception as e:
@@ -264,8 +283,8 @@ def get_insights():
         df['amount'] = pd.to_numeric(df['amount'])
         
         # Calculate insights
-        total_spending = df['amount'].sum()
-        average_daily = total_spending / days
+        total_spending = float(df['amount'].sum())
+        average_daily = float(total_spending / days)
         
         # Category insights
         category_totals = df.groupby('category')['amount'].sum()
@@ -280,10 +299,10 @@ def get_insights():
             'averageDailySpending': average_daily,
             'topCategory': top_category,
             'topPaymentMethod': top_payment,
-            'categoryBreakdown': category_totals.to_dict(),
-            'paymentMethodBreakdown': payment_totals.to_dict(),
-            'transactionCount': len(df),
-            'daysAnalyzed': days
+            'categoryBreakdown': convert_numpy_types(category_totals.to_dict()),
+            'paymentMethodBreakdown': convert_numpy_types(payment_totals.to_dict()),
+            'transactionCount': int(len(df)),
+            'daysAnalyzed': int(days)
         }
         
         return jsonify(insights)
