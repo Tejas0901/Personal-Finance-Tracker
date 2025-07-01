@@ -142,7 +142,7 @@ function ChartsSection({ categorySpending, monthlyTrend, topPaymentMethods }: Ch
     },
     plugins: {
       legend: {
-        position: 'bottom',
+        position: 'bottom' as const,
         labels: {
           padding: 20,
           usePointStyle: true,
