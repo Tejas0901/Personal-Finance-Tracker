@@ -2,55 +2,45 @@
 
 A comprehensive full-stack web application for tracking personal expenses, managing budgets, and gaining insights into spending patterns. Built with Next.js, Node.js, and Python, this app provides real-time financial analytics with suggestions.
 
-## 🚀 Live Demo
+Live Demo
 
 - **Frontend**: [https://personal-finance-tracker-ashen-gamma.vercel.app/dashboard]
 - **Backend API**: [https://personal-finance-tracker-jp4c.onrender.com]
 - **Python Service**: [https://personal-finance-tracker-1-8nub.onrender.com]
-## 🔑 Test Credentials
+Test Credentials
 
 You can use these test credentials to explore the application:
 
-- **Email**: `user@example.com`
-- **Password**: `123456`
+- **Email**: `tejas.nigam9@gmail.com`
+- **Password**: `tejas123`
 
 ## Features
 
-### 📊 Dashboard with Interactive Charts
+Dashboard with Interactive Charts
 - **Pie Chart**: Visual representation of category-wise spending distribution
 - **Line Chart**: Monthly spending trends over the last 6 months
 - **Payment Methods Analysis**: Breakdown of spending by payment method
 - **Real-time Insights**: Key metrics and spending patterns
 
-### 💰 Expense Management
+Expense Management
 - Add, edit, and delete expenses
 - Categorize expenses (Food, Rent, Shopping, etc.)
 - Track payment methods (UPI, Credit Card, Cash)
 - Add notes and dates to expenses
-- Filter and search functionality
 
-### 📋 Budget Management
+Budget Management
 - Set monthly spending limits for each category
 - Real-time budget alerts (80% and 100% thresholds)
 - Track budget vs actual spending
 
-### 🤖 Smart Suggestions
-- AI-powered spending analysis using Python
-- Personalized recommendations for budget optimization
-- Spending pattern recognition
-
-### 📈 Reports & Analytics
+Reports & Analytics
 - Monthly spending summaries
 - Category-wise spending analysis
 - Payment method usage statistics
 - Historical spending trends
 
-### ✨ Extra Features Added
+Extra Features Added
 - **Responsive Design**: Mobile-first approach with TailwindCSS
-- **Real-time Notifications**: Budget threshold alerts
-- **Dark/Light Mode**: Theme switching capability
-- **Offline Support**: Basic offline functionality with service workers
-- **Multi-language Support**: Internationalization ready
 - **Advanced Filtering**: Date range, category, and amount filters
 - **Data Visualization**: Interactive charts with Chart.js
 - **Security**: JWT authentication with bcrypt password hashing
@@ -67,7 +57,6 @@ You can use these test credentials to explore the application:
 ### Backend
 - **Node.js** with Express.js
 - **MongoDB** for main database
-- **SQLite** for monthly reports
 - **JWT** for authentication
 - **bcryptjs** for password hashing
 
@@ -76,7 +65,7 @@ You can use these test credentials to explore the application:
 - **Pandas** for data analysis
 - **NumPy** for numerical computations
 
-## 🛠️ How to Run Locally
+## How to Run Locally
 
 ### Prerequisites
 - Node.js (v16 or higher)
@@ -115,7 +104,7 @@ You can use these test credentials to explore the application:
    ```bash
    cd python-service
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate
    pip install -r requirements.txt
    cp env.example .env
    # Update .env with your configuration
@@ -129,7 +118,7 @@ You can use these test credentials to explore the application:
 ```env
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/personalFinanceTracker
-JWT_SECRET=your-super-secret-jwt-key
+JWT_SECRET=K8g7!d93j#v@ZmLx29Ft@7LdNq^1wRu*
 PYTHON_SERVICE_URL=http://localhost:5001
 CORS_ORIGIN=http://localhost:3000
 ```
@@ -157,36 +146,16 @@ PORT=5001
 
 ## 📊 Chart Features
 
-### Category Spending Pie Chart
-- Visual breakdown of spending by category
-- Interactive tooltips showing amounts and percentages
-- Color-coded segments for easy identification
-- Responsive design for all screen sizes
-
-### Monthly Spending Trend Line Chart
-- 6-month spending history visualization
-- Smooth curve with gradient fill
-- Hover effects showing exact amounts
-- Y-axis formatted with currency symbols
-
-### Payment Methods Analysis
-- Card-based layout showing payment method usage
-- Transaction count and total amount per method
-- Percentage of total spending calculation
-- Clean, modern design
-
-### Spending Insights
-- Key metrics summary cards
-- Total spending calculation
-- Top category identification with percentage
-- Trend direction analysis (increasing/decreasing/stable)
+- Category Spending Pie Chart
+- Monthly Spending Trend Line Chart
+- Payment Methods Analysis
+- Spending Insights
 
 ## 🔌 API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
-- `GET /api/auth/profile` - Get user profile
 
 ### Expenses
 - `GET /api/expenses` - Get user expenses
@@ -215,7 +184,6 @@ PORT=5001
 ```bash
 cd frontend
 npm run build
-# Deploy the .next folder to Vercel
 ```
 
 ### Backend (Render)
@@ -231,19 +199,3 @@ cd python-service
 pip install -r requirements.txt
 python app.py
 ```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For support and questions, please open an issue in the GitHub repository.

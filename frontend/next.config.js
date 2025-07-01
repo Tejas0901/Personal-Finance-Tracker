@@ -6,6 +6,19 @@ const nextConfig = {
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
+  // Disable experimental features that might cause issues
+  experimental: {
+    optimizeCss: false,
+    scrollRestoration: false,
+  },
+  // Increase timeout for chunk loading
+  webpack: (config) => {
+    config.watchOptions = {
+      poll: 1000,
+      aggregateTimeout: 300,
+    }
+    return config
+  },
   async headers() {
     return [
       {
