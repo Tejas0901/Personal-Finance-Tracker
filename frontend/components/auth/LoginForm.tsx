@@ -106,7 +106,7 @@ export default function LoginForm() {
         {isLoading ? 'Signing in...' : 'Sign In'}
       </button>
 
-      <div className="text-center text-sm text-gray-600">
+      {/* <div className="text-center text-sm text-gray-600">
         <p>Test Credentials:</p>
         <p className="font-mono text-xs mt-1">
           user@example.com / 123456
@@ -114,7 +114,7 @@ export default function LoginForm() {
         <p className="font-mono text-xs">
           admin@example.com / admin123
         </p>
-      </div>
+      </div> */}
     </form>
   )
 } 
