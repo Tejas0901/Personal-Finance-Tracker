@@ -63,4 +63,40 @@ input, select, textarea {
 
 input::placeholder, textarea::placeholder {
   color: #6b7280 !important;
+}
+
+/* Chart container styles - FIXED for stable positioning */
+.chart-container {
+  position: relative;
+  height: 256px !important;
+  width: 100%;
+  min-height: 256px !important;
+  max-height: 256px !important;
+  overflow: hidden;
+  contain: layout style paint;
+}
+
+/* Chart canvas styles - FIXED to prevent movement */
+.chart-container canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100% !important;
+  width: 100% !important;
+  max-height: 256px !important;
+  max-width: 100% !important;
+  display: block !important;
+}
+
+/* Responsive chart adjustments */
+@media (max-width: 768px) {
+  .chart-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 640px) {
+  .chart-container {
+    height: 250px;
+  }
 } 

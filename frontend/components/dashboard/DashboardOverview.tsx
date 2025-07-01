@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import ChartsSection from './ChartsSection'
 
 interface DashboardData {
   currentMonth: string
@@ -44,7 +45,7 @@ export default function DashboardOverview() {
     fetchDashboardData()
   }, [])
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       const token = localStorage.getItem(process.env.NEXT_PUBLIC_JWT_STORAGE_KEY || 'finance_tracker_token')
       const response = await axios.get(
@@ -62,7 +63,7 @@ export default function DashboardOverview() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [])
 
   if (isLoading) {
     return (
@@ -155,9 +156,16 @@ export default function DashboardOverview() {
         </div>
       </div>
 
+      {/* Charts Section */}
+      <ChartsSection 
+        categorySpending={data.categorySpending}
+        monthlyTrend={data.monthlyTrend}
+        topPaymentMethods={data.topPaymentMethods}
+      />
+
       {/* Category Spending Summary */}
       <div className="card mb-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Category Spending</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Category Spending Summary</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {data.categorySpending.map((category, index) => (
             <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
