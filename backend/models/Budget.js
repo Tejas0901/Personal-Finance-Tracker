@@ -54,7 +54,7 @@ budgetSchema.index({ user: 1, category: 1, month: 1 }, { unique: true });
 
 // Virtual for current spending (will be calculated)
 budgetSchema.virtual('currentSpending').get(function() {
-  return 0; // This will be calculated in the controller
+  return 0; 
 });
 
 // Virtual for spending percentage
