@@ -27,7 +27,12 @@ export default function LoginForm() {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-        data
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
       )
 
       const { token, user } = response.data
