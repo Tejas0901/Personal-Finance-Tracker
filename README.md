@@ -1,6 +1,18 @@
 # Personal Finance Tracker+
 
-A comprehensive full-stack web application for tracking personal expenses, managing budgets, and gaining insights into spending patterns.
+A comprehensive full-stack web application for tracking personal expenses, managing budgets, and gaining insights into spending patterns. Built with Next.js, Node.js, and Python, this app provides real-time financial analytics with suggestions.
+
+## 🚀 Live Demo
+
+- **Frontend**: [https://personal-finance-tracker-ashen-gamma.vercel.app/dashboard]
+- **Backend API**: [https://personal-finance-tracker-jp4c.onrender.com]
+- **Python Service**: [https://personal-finance-tracker-1-8nub.onrender.com]
+## 🔑 Test Credentials
+
+You can use these test credentials to explore the application:
+
+- **Email**: `user@example.com`
+- **Password**: `123456`
 
 ## Features
 
@@ -33,6 +45,16 @@ A comprehensive full-stack web application for tracking personal expenses, manag
 - Payment method usage statistics
 - Historical spending trends
 
+### ✨ Extra Features Added
+- **Responsive Design**: Mobile-first approach with TailwindCSS
+- **Real-time Notifications**: Budget threshold alerts
+- **Dark/Light Mode**: Theme switching capability
+- **Offline Support**: Basic offline functionality with service workers
+- **Multi-language Support**: Internationalization ready
+- **Advanced Filtering**: Date range, category, and amount filters
+- **Data Visualization**: Interactive charts with Chart.js
+- **Security**: JWT authentication with bcrypt password hashing
+
 ## Tech Stack
 
 ### Frontend
@@ -54,7 +76,7 @@ A comprehensive full-stack web application for tracking personal expenses, manag
 - **Pandas** for data analysis
 - **NumPy** for numerical computations
 
-## Getting Started
+## 🛠️ How to Run Locally
 
 ### Prerequisites
 - Node.js (v16 or higher)
@@ -65,7 +87,7 @@ A comprehensive full-stack web application for tracking personal expenses, manag
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/Tejas0901/Personal-Finance-Tracker/tree/main>
    cd Personal-Finance-Tracker
    ```
 
@@ -77,6 +99,7 @@ A comprehensive full-stack web application for tracking personal expenses, manag
    # Update .env with your configuration
    npm run dev
    ```
+   The backend will run on `http://localhost:5000`
 
 3. **Frontend Setup**
    ```bash
@@ -86,6 +109,7 @@ A comprehensive full-stack web application for tracking personal expenses, manag
    # Update .env.local with your configuration
    npm run dev
    ```
+   The frontend will run on `http://localhost:3000`
 
 4. **Python Service Setup**
    ```bash
@@ -97,6 +121,7 @@ A comprehensive full-stack web application for tracking personal expenses, manag
    # Update .env with your configuration
    python app.py
    ```
+   The Python service will run on `http://localhost:5001`
 
 ### Environment Variables
 
@@ -122,15 +147,15 @@ FLASK_ENV=development
 PORT=5001
 ```
 
-## Usage
+## 📱 Usage
 
-1. **Register/Login**: Create an account or login with existing credentials
+1. **Register/Login**: Create an account or login with existing credentials (use test credentials above)
 2. **Add Expenses**: Start tracking your daily expenses with categories and payment methods
 3. **Set Budgets**: Define monthly spending limits for different categories
 4. **View Dashboard**: Explore interactive charts and insights
 5. **Get Suggestions**: Receive AI-powered recommendations for better financial management
 
-## Chart Features
+## 📊 Chart Features
 
 ### Category Spending Pie Chart
 - Visual breakdown of spending by category
@@ -156,7 +181,7 @@ PORT=5001
 - Top category identification with percentage
 - Trend direction analysis (increasing/decreasing/stable)
 
-## API Endpoints
+## 🔌 API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - User registration
@@ -184,30 +209,30 @@ PORT=5001
 - `GET /api/suggestions` - Get smart suggestions
 - `POST /api/suggestions/analyze` - Analyze spending patterns
 
-## Deployment
+## 🚀 Deployment
 
-### Frontend (Vercel/Netlify)
+### Frontend (Vercel)
 ```bash
 cd frontend
 npm run build
-# Deploy the .next folder
+# Deploy the .next folder to Vercel
 ```
 
-### Backend (Render/Railway)
+### Backend (Render)
 ```bash
 cd backend
 npm install
 npm start
 ```
 
-### Python Service (Render/Railway)
+### Python Service (Render)
 ```bash
 cd python-service
 pip install -r requirements.txt
 python app.py
 ```
 
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -215,10 +240,10 @@ python app.py
 4. Add tests if applicable
 5. Submit a pull request
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License.
 
-## Support
+## 🆘 Support
 
 For support and questions, please open an issue in the GitHub repository.
