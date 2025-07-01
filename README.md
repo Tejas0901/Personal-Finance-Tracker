@@ -136,7 +136,7 @@ FLASK_ENV=development
 PORT=5001
 ```
 
-## 📱 Usage
+## Usage
 
 1. **Register/Login**: Create an account or login with existing credentials (use test credentials above)
 2. **Add Expenses**: Start tracking your daily expenses with categories and payment methods
@@ -144,14 +144,14 @@ PORT=5001
 4. **View Dashboard**: Explore interactive charts and insights
 5. **Get Suggestions**: Receive AI-powered recommendations for better financial management
 
-## 📊 Chart Features
+## Chart Features
 
 - Category Spending Pie Chart
 - Monthly Spending Trend Line Chart
 - Payment Methods Analysis
 - Spending Insights
 
-## 🔌 API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - User registration
@@ -178,7 +178,7 @@ PORT=5001
 - `GET /api/suggestions` - Get smart suggestions
 - `POST /api/suggestions/analyze` - Analyze spending patterns
 
-## 🚀 Deployment
+## Deployment
 
 ### Frontend (Vercel)
 ```bash
